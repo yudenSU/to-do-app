@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { authProvider } from '../authprovider';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../auth/hooks/useAuth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,11 +8,12 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const { checkAuth } = useAuth();
 
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const authStatus = await authProvider.checkAuth();
+        const authStatus = checkAuth();
         setIsAuthenticated(authStatus);
       } catch (error: unknown) {
         console.log(error);
@@ -21,7 +22,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     };
 
     checkAuthentication();
-  }, []);
+  }, [checkAuth]);
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>; // Wait for authentication check

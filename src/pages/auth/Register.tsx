@@ -1,12 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { authProvider } from "../../authprovider";
 import { Box, Typography, Sheet, FormControl, FormLabel, Input, Button } from "@mui/joy";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        authProvider.login({username: "a", password: "b"});
         navigate('/dashboard'); // Redirect to dashboard after login
     };
 

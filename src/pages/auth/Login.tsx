@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Sheet, Typography, FormControl, FormLabel, Input, Button, Box, IconButton } from "@mui/joy";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { authProvider } from '../../authprovider';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 const LoginPage = () => {
-    const [showPassword, setShowPassword] = useState(false);
+    const { login } = useAuth();
+        const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission behavior
@@ -16,8 +17,7 @@ const LoginPage = () => {
 
         console.log("Username:", username);
         console.log("Password:", password);
-
-        authProvider.login({ username, password });
+        login(username, password)
         // navigate('/'); // Redirect to home
     };
 
