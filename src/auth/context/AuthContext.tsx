@@ -1,14 +1,12 @@
 import { createContext } from "react";
+import { User } from "../../types/interfaces";
 
-interface User {
-    id: string;
-    fullName: string;
-}
+
 
 interface AuthContextType {
     isAuthenticated: boolean;
     user: User | null;
-    login: (username: string, password: string) => Promise<void>;
+    login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     checkAuth: () => boolean
 }

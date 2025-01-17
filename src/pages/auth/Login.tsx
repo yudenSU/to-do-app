@@ -3,22 +3,30 @@ import { Link } from "react-router-dom";
 import { Sheet, Typography, FormControl, FormLabel, Input, Button, Box, IconButton } from "@mui/joy";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../../auth/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const { login } = useAuth();
         const [showPassword, setShowPassword] = useState(false);
-
-    const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    const navigate = useNavigate()
+    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default form submission behavior
 
         const form = event.currentTarget;
         const username = (form.elements.namedItem("username") as HTMLInputElement).value;
         const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
-        console.log("Username:", username);
-        console.log("Password:", password);
         login(username, password)
-        // navigate('/'); // Redirect to home
+
+            try {
+                const success = await login(username, password);
+                if (success) {
+                    navigate('/'); // Redirect to the home page
+                }
+            } catch (error) {
+                console.log('Invalid credentials', error);
+            }
+
     };
 
     const handleClickShowPassword = () => {
@@ -57,11 +65,11 @@ const LoginPage = () => {
                     variant="outlined"
                 >
                     <FormControl>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Username or email address</FormLabel>
                         <Input
                             name="username"
                             type="text" // Changed to text for better input handling
-                            placeholder="username"
+                            placeholder="username or email"
                         />
                     </FormControl>
 

@@ -5,17 +5,20 @@ import { CssVarsProvider, CssBaseline } from '@mui/joy'
 import { theme } from './theme.ts'
 import '@fontsource/inter'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from "./auth/context/AuthProvider";
 
 const queryClient = new QueryClient();
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <AuthProvider>
     <CssVarsProvider theme={theme}>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </CssVarsProvider>
+    </AuthProvider>
   </StrictMode>,
 )

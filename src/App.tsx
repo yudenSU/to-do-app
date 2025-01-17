@@ -6,7 +6,6 @@ import RegisterPage from "./pages/auth/Register";
 import HomePage from "./pages/home/home";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ForgotPasswordPage from "./pages/auth/ForgotPassword";
-import { AuthProvider } from "./auth/context/AuthProvider";
 
 function App() {
   const { setMode } = useColorScheme();
@@ -29,7 +28,7 @@ function App() {
   }, [setMode]);
 
   return (
-    <AuthProvider>
+    <>
       <BrowserRouter>
         <Routes>
           
@@ -47,7 +46,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </>
   );
 }
 
