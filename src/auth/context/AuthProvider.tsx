@@ -62,12 +62,75 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null);
     };
 
-    const checkAuth = () => {
-        return true
+    const getUser = async () => {
+
+        const accessToken = localStorage.getItem("accessToken")
+
+        let response = await fetch('https://dummyjson.com/auth/me', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+        });
+        //If unauthorised, attempt refresh
+        if (response.status == 401) {
+            const refreshToken = localStorage.getItem("refreshToken")
+
+            const refreshResponse = await fetch('https://dummyjson.com/auth/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Authorization': `Bearer ${accessToken}`
+                    'Authorization': `Bearer asd`
+
+                },
+                body: JSON.stringify({
+                    refreshToken: `${refreshToken}`,
+                  }),
+            });
+
+            if (!refreshResponse.ok) {
+                return null
+            }
+
+            const refreshData = await refreshResponse.json();
+
+            localStorage.setItem('accessToken', refreshData.accessToken); 
+            localStorage.setItem('refreshToken', refreshData.refreshToken); 
+
+            response = await fetch('https://dummyjson.com/auth/me', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+            });
+        }
+        
+        if (!response.ok) {
+            return null
+        }
+
+        const data = await response.json();
+
+        const userObject = { 
+            id: data.id, 
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            gender: data.gender,
+            username: data.username,
+            image: data.image
+        }
+
+        setUser(userObject);
+
+        return userObject;
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout, checkAuth }}>
+        <AuthContext.Provider value={{ user, login, logout, getUser }}>
             {children}
         </AuthContext.Provider>
     );

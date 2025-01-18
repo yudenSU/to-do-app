@@ -8,13 +8,13 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const { checkAuth } = useAuth();
+  const { getUser } = useAuth();
 
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const authStatus = checkAuth();
-        setIsAuthenticated(authStatus);
+        const user = await getUser();
+        setIsAuthenticated(user != null);
       } catch (error: unknown) {
         console.log(error);
         setIsAuthenticated(false);
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     };
 
     checkAuthentication();
-  }, [checkAuth]);
+  }, [getUser]);
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>; // Wait for authentication check

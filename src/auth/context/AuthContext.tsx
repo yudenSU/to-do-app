@@ -4,11 +4,10 @@ import { User } from "../../types/interfaces";
 
 
 interface AuthContextType {
-    isAuthenticated: boolean;
     user: User | null;
     login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
-    checkAuth: () => boolean
+    getUser: () => Promise<User | null>
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
