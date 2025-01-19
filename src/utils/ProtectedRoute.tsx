@@ -8,6 +8,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
   const { getUser } = useAuth();
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <div>Loading...</div>; // Wait for authentication check
   }
 
-  if (isAuthenticated === false && isAuthenticated != false) {
+  if (isAuthenticated === false && isAuthenticated != null) {
     return <Navigate to="/login" />;
   }
 

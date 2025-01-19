@@ -3,9 +3,10 @@ import { useColorScheme } from "@mui/joy";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/auth/Login";
 import RegisterPage from "./pages/auth/Register";
-import HomePage from "./pages/home/home";
+import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ForgotPasswordPage from "./pages/auth/ForgotPassword";
+import HelpPage from "./pages/help";
 
 function App() {
   const { setMode } = useColorScheme();
@@ -31,16 +32,21 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          
+
           {/* Public Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          
+
           {/* Private Routes */}
           <Route path="/" element={
             <ProtectedRoute>
               <HomePage />
+            </ProtectedRoute>
+          } />
+          <Route path="/help" element={
+            <ProtectedRoute>
+              <HelpPage />
             </ProtectedRoute>
           } />
 

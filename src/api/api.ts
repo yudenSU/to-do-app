@@ -1,10 +1,7 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { INewToDo, IUpdateToDoRequest } from '../types/interfaces';
 
-//Interfaces for params
-interface updateTodoParam {
-    id: number,
-    updatedTodo: string
-}
+//To do 401 err management
 
 // Helper to fetch data from the DummyJSON API
 const fetchUserTodos = async (userId: number, limit = 10, skip = 0) => {
@@ -39,7 +36,7 @@ export const useTodo = (id: number) => {
 export const useCreateTodo = () => {
   return useMutation( {
     mutationKey: ["todo"],
-    mutationFn: async (newTodo) => {
+    mutationFn: async (newTodo: INewToDo) => {
         const res = await fetch('https://dummyjson.com/todos/add', {
           method: 'POST',
           headers: {
@@ -50,7 +47,6 @@ export const useCreateTodo = () => {
         return res.json();
       },
   }
-
   );
 };
 
@@ -59,13 +55,19 @@ export const useUpdateTodo = () => {
   return useMutation(
     {
         mutationKey: ["todo"],
-        mutationFn: async ({id, updatedTodo}: updateTodoParam) => {
-            const res = await fetch(`https://dummyjson.com/todos/${id}`, {
+        mutationFn: async (updateToDoRequest: IUpdateToDoRequest) => {
+          
+            const body = {
+              completed: updateToDoRequest.completed,
+              todo: updateToDoRequest.updatedTodo,
+            }
+
+            const res = await fetch(`https://dummyjson.com/todos/${updateToDoRequest.id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(updatedTodo),
+              body: JSON.stringify(body),
             });
             return res.json();
           },
@@ -78,7 +80,7 @@ export const useDeleteTodo = () => {
   return useMutation(
     {
         mutationKey:["todo"],
-        mutationFn: async (id) => {
+        mutationFn: async (id: number) => {
             const res = await fetch(`https://dummyjson.com/todos/${id}`, {
               method: 'DELETE',
             });

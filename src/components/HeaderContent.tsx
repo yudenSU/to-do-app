@@ -15,23 +15,23 @@ import Drawer from '@mui/joy/Drawer';
 import ModalClose from '@mui/joy/ModalClose';
 import DialogTitle from '@mui/joy/DialogTitle';
 
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
-import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import SideBar from './SideBar';
-
+import { useAuth } from '../auth/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = React.useState(false);
+
   React.useEffect(() => {
     setMounted(true);
   }, []);
   if (!mounted) {
-    return <IconButton size="sm" variant="outlined" color="primary" />;
+    return <IconButton size="sm" variant="plain" color="neutral" />;
   }
   return (
     <Tooltip title="Change theme" variant="outlined">
@@ -57,6 +57,10 @@ function ColorSchemeToggle() {
 
 export default function Header() {
   const [open, setOpen] = React.useState(false);
+  
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
   return (
     <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'space-between' }}>
       <Stack
@@ -68,14 +72,7 @@ export default function Header() {
           display: { xs: 'none', sm: 'flex' },
         }}
       >
-        <IconButton
-          size="md"
-          variant="outlined"
-          color="neutral"
-          sx={{ display: { xs: 'none', sm: 'inline-flex' }, borderRadius: '50%' }}
-        >
-          <LanguageRoundedIcon />
-        </IconButton>
+
       </Stack>
       <Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
         <IconButton variant="plain" color="neutral" onClick={() => setOpen(true)}>
@@ -87,7 +84,7 @@ export default function Header() {
           onClose={() => setOpen(false)}
         >
           <ModalClose />
-          <DialogTitle>Acme Co.</DialogTitle>
+          <DialogTitle>My to do list</DialogTitle>
           <Box sx={{ px: 1 }}>
             <SideBar/>
           </Box>
@@ -101,15 +98,6 @@ export default function Header() {
           alignItems: 'center',
         }}
       >
-        
-        <IconButton
-          size="sm"
-          variant="outlined"
-          color="neutral"
-          sx={{ display: { xs: 'inline-flex', sm: 'none' }, alignSelf: 'center' }}
-        >
-          <SearchRoundedIcon />
-        </IconButton>
         <ColorSchemeToggle />
         <Dropdown>
           <MenuButton
@@ -118,8 +106,7 @@ export default function Header() {
             sx={{ maxWidth: '32px', maxHeight: '32px', borderRadius: '9999999px' }}
           >
             <Avatar
-              src="https://i.pravatar.cc/40?img=2"
-              srcSet="https://i.pravatar.cc/80?img=2"
+              src={ user?.image}
               sx={{ maxWidth: '32px', maxHeight: '32px' }}
             />
           </MenuButton>
@@ -136,22 +123,24 @@ export default function Header() {
             <MenuItem>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Avatar
-                  src="https://i.pravatar.cc/40?img=2"
-                  srcSet="https://i.pravatar.cc/80?img=2"
+                  src={ user?.image}
                   sx={{ borderRadius: '50%' }}
                 />
                 <Box sx={{ ml: 1.5 }}>
                   <Typography level="title-sm" textColor="text.primary">
-                    Rick Sanchez
+                    {user?.username}
                   </Typography>
                   <Typography level="body-xs" textColor="text.tertiary">
-                    rick@email.com
+                    {user?.email}
                   </Typography>
                 </Box>
               </Box>
             </MenuItem>
             <ListDivider />            
-            <MenuItem>
+            <MenuItem onClick={() => {
+              logout()
+              navigate('/login')
+              }}>
               <LogoutRoundedIcon />
               Log out
             </MenuItem>

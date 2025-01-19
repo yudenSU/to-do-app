@@ -15,3 +15,17 @@ export interface ITodo {
     completed: boolean,
     userId: number
 }
+
+export interface INewToDo {
+    todo: string,
+    completed: boolean,
+    userId: number
+}
+
+//Interfaces for params
+export interface IUpdateToDoRequest {
+    id: number,
+    updatedTodo?: string
+    completed?: boolean
+
+  }
