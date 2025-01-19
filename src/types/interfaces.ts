@@ -8,3 +8,10 @@ export interface User {
     gender: string;
     image: string;
 }
+
+export interface ITodo {
+    id: number,
+    todo : string,
+    completed: boolean,
+    userId: number
+}

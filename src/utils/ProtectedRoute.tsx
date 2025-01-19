@@ -28,7 +28,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <div>Loading...</div>; // Wait for authentication check
   }
 
-  if (!isAuthenticated) {
+  if (isAuthenticated === false && isAuthenticated != false) {
     return <Navigate to="/login" />;
   }
 

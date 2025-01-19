@@ -6,6 +6,8 @@ import CssBaseline from '@mui/joy/CssBaseline';
 import * as Layout from '../../components/layout';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
+import { Typography } from '@mui/joy';
+import Todo from '../../components/todo/Todo';
 
 export default function TeamExample() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -34,7 +36,8 @@ export default function TeamExample() {
           <SideBar />
         </Layout.SideNav>
         <Layout.Main>
-          <h1>Hello</h1>
+          <Typography level='h1'>To do:</Typography>
+          <Todo/>
         </Layout.Main>
       </Layout.Root>
     </CssVarsProvider>
