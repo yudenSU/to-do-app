@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
-import { Close, CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material';
 import { Button, DialogTitle, FormControl, IconButton, Input, Modal, ModalDialog, Stack, Typography } from '@mui/joy';
 import { ITodo, IUpdateToDoRequest } from '../../types/interfaces';
+import CheckBox from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlank from '@mui/icons-material/CheckBoxOutlineBlank';
+import Close from '@mui/icons-material/Close';
 
 interface TodoListItemProps {
     todo: ITodo;
@@ -77,7 +79,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                 key={todo.id} // Use todo.id as key, as it should be unique
                 startAction={
 
-                    <IconButton
+                    <IconButton title={todo.completed ? "uncheck" : "check"}
                         sx={{
                             pr: 1
                         }}
@@ -90,7 +92,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                     </IconButton>
                 }
                 endAction={
-                    <IconButton
+                    <IconButton title="delete"
                         onClick={() => onDelete(todo.id)} // Trigger the delete callback when the close button is clicked
                     >
                         <Close />

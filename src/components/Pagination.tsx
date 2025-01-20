@@ -1,4 +1,5 @@
-import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
+import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import { Box, IconButton, Typography } from "@mui/joy";
 
 interface PaginationProps {
@@ -17,6 +18,7 @@ export default function Pagination({ current, total, onPrev, onNext }: Paginatio
             alignItems={"center"}
         >
             <IconButton
+                title="previous"
                 onClick={onPrev}
                 disabled={current === 1}
             >
@@ -26,6 +28,7 @@ export default function Pagination({ current, total, onPrev, onNext }: Paginatio
                 Page {current} of {total}
             </Typography>
             <IconButton
+                title="next"
                 onClick={onNext}
                 disabled={current === total}
             >

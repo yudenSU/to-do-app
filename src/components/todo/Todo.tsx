@@ -4,8 +4,8 @@ import { useCreateTodo, useDeleteTodo, useFetchUserTodos, useUpdateTodo } from "
 import { useEffect, useState } from "react";
 import { INewToDo, ITodo, IUpdateToDoRequest } from "../../types/interfaces";
 import Pagination from "../Pagination";
-import { Add } from "@mui/icons-material";
 import { useAuth } from "../../auth/hooks/useAuth";
+import Add from "@mui/icons-material/Add";
 
 
 export default function Todo() {
@@ -186,7 +186,7 @@ export default function Todo() {
                                 variant="soft"
                                 size="lg"
                             >
-                                Add Todo
+                                Add
                             </Button>
                         </Box>
                     </Box>
