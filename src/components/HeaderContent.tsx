@@ -106,6 +106,7 @@ export default function Header() {
             sx={{ maxWidth: '32px', maxHeight: '32px', borderRadius: '9999999px' }}
           >
             <Avatar
+              alt='profile-picture'
               src={ user?.image}
               sx={{ maxWidth: '32px', maxHeight: '32px' }}
             />
