@@ -22,14 +22,13 @@ High priority requirements are specified by the technical assignment specificati
 - Create, Update and Delete functionality for To Do items.
 
 **Accesibility**
-- Dark themes changes (eye-strain)
+- Dark theme (eye-strain)
 - Tab Key (keyboard) navigation support
 
 ### Non Functional Requirements
 
 **High Priority**
 - React must be used for development
-
 
 **Accesibility**
 - ARIA labels and descriptors to be effectively used
@@ -38,52 +37,55 @@ High priority requirements are specified by the technical assignment specificati
 
 **React:** Use was required based on the technical assessment specification.
 
-**Vite:** Vite was used the build and development enviornment as it offers a lightweight and performant approach. 
+**Vite:** Vite was used as the build and development enviornment as it offers a lightweight and performant approach. 
 
 **Vitest:** Vitest was used for unit testing as it intergrates well with Vite and has strong community support.
 
 **React-Query:** React Query was used for handling API request. It was used in conjunction with the Fetch library. React Query was chosen for its fast set-up and simple approach to manage server-state.
 
-**JOY UI:** Joy ui was used as the main component library for its strong support (by MUI), and mobile-first design principles. It also follows best practises for web accesibility.
+**JOY UI:** Joy ui was used as the main component library for its strong support (by MUI), and mobile-first design principles. It also follows best practices for web accesibility.
 
-## Known Limitations & Security Risk
+## Known Limitations & Security Risks
 ### Limitations
 
 | Limitation    | Provisional Solution |
 | -------- | ------- |
-| DummyJSON does not update server state for create, update and delete. Since our  implementation with react-query aims to maintain a single source of truth with server state. Create, Update and Delete changes are not reflected in the front-end | An *Alert* UI element is raised to recognise succesful POST, PATCH and PUT actions following a succesfuly 200 ok response from DummyJSON.    |
-| DummyJSON's cookie authentication system was not working at the time this project was created. As a result cookie based authentication was not available. | Auth Tokens are stored in local storage and passed through headers. Known security errors are detailed below.     |
-| Register and password reset operations are not supported by dummyJSON | Currently the register and forgot password pages are not functional. But maintained to demonstrate UI/UX considerations and prepare for future implementation   |
+| DummyJSON does not update server state for create, update and delete. Since our  implementation with react-query aims to maintain a single source of truth with server-state, Create, Update and Delete changes are not reflected in the front-end. | An *Alert* UI element is raised to recognise succesful POST, PATCH and PUT actions following a succesful 200 ok response from DummyJSON.    |
+| DummyJSON's cookie authentication system was not working at the time this project was created. As a result cookie-based authentication was not available. | Auth Tokens are stored in local storage and passed through headers. Known security errors are detailed below.     |
+| Register and password reset operations are not supported by dummyJSON. | Currently the register and forgot password pages are not functional. But developed to demonstrate UI/UX considerations and prepare for future implementation.   |
+
 
 ### Security Risks
 
 The app is currently vulnerable to Cross-Site Scripting (XSS) and Cross-Site Request Forgery (CSRF) due to the storage of auth tokens in local storage.
 
-This should be ammended by storing the tokens in httpOnly cookies, but this is not an applicable solutions due to the limitations of DummyJSON.
+This should be ammended by storing the tokens in httpOnly cookies, but this is not an applicable solution due to the limitations of DummyJSON.
+
+The Register component currently does not contain any password complexity checks. This is intentionally left out as currently DummyJSON does not state any password complexity rules.
 
 ## UI/UX Design 
 
-The project aims to uphold design best practices. The following assumptions on potential users were established:
+The project aims to uphold design best practices. The following assumptions were made regarding potential users:
 
 1. Most users are likely to use the app on mobile.
-2. Desktop users are likely to dynamically resize the screen, such as for multitasking by looking at their to do list and another task.
+2. Desktop users are likely to dynamically resize their screen, such as for multitasking by looking at their to do list and another task.
 
 
 
 Mobile-centric design:
 
-- 'Action' components such as buttons are spaced to prevent misclicks
+- 'Action' components such as buttons are spaced to prevent misclicks.
 - Vertical content delivery in mobile views which are more intuitive with scrolling.
 - Information segregation: content is divided in distinct views to prevent information overview: e.g. navigation is hidden behind a navigation menu button.
 - Optimised with 320px lower bound: https://uxpickle.com/what-is-the-smallest-screen-size-you-should-design-for/
 
 Responsive design
 
-- Design is responsive to screen size and supports dynamic resizing of the screen 
+- Design is responsive to screen size and supports dynamic resizing of the screen. 
 
-Dark/light color themes
+Dark/light colour themes
 
-- Light and Dark mode themes are supported to prevent eye-strain, and for personal preference
+- Light and Dark mode themes are supported to prevent eye-strain, and for personal preference.
 - On start-up the app will use the current system/browser dark/light mode setting. This is so that the app adheres to the user's usual preference.
 - Light and dark mode is toggleable at runtime so users will have a choice to change themes such as in cases where they move to another room with different lighting.
 
@@ -102,9 +104,8 @@ Notable accesiblity choices include:
 ### General
 The project was segregated as follows:
 
-Networking functionality is sectioned in the /api directory
-
-Authentication functionality is sectioned in the /auth directory
+- Networking functionality is sectioned in the /api directory
+- Authentication functionality is sectioned in the /auth directory
 
 Other sections are related to visual elements of the user interface.
 
@@ -115,12 +116,12 @@ React-query is used to manage all network requests. Querying the data is perform
     - Cache invalidation is handled through React-Query's mutation system
 - isLoading and isError states
 
-Dynamic component that rely on server-side data strictly uses react-query's states. This ensures consistency with the server and that the user's view is consitent to remote data.
+Dynamic components that rely on server-side data strictly uses react-query's states. This ensures consistency with the server and that the user's view is consistent to remote data.
 
 
 #### Error handling
-- 401 errors trigger an attempted reauthentication of the user (via the refresh token)
-- non 401 and 404 errors, are handled by 3 retries operations handled by react-query using exponential back-off. 
+- 401 errors trigger an attempted reauthentication of the user (via the refresh token).
+- non 401 and 404 errors, are handled by 3 retry operations handled by react-query using exponential back-off. 
 - If the request still does not succeed, the error is formatted and thrown.
 - Presentation of the error is handled at the component side to ensure a user-friendly view is displayed.
 
@@ -129,7 +130,7 @@ An auth context system was developed using react context. The context is accesse
 
 The approach is similar to what is done by Auth0, firebase Auth and other pre-built solutions such as Refine. Thus, it will also allow easy transition to production ready authentication providers.
 
-Similar to other network request, a 3 retry system is used to handle authentication actions.
+Similar to other network requests, a 3 retry system is used to handle authentication actions.
 
 ### To do functionality
 
@@ -141,4 +142,4 @@ Sort, search and filter functionality is not supported due to limitations in dum
 A help page is added to assist first-time users with the app.
 
 ### Testing
-Unit test are provided to test components are correctly rendering and respond to user interaction.
+Unit tests are provided to test components are correctly rendering and respond to user interaction.
