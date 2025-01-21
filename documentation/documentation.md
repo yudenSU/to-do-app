@@ -51,7 +51,7 @@ High priority requirements are specified by the technical assignment specificati
 | Limitation    | Provisional Solution |
 | -------- | ------- |
 | DummyJSON does not update server state for create, update and delete. Since our  implementation with react-query aims to maintain a single source of truth with server-state, Create, Update and Delete changes are not reflected in the front-end. | An *Alert* UI element is raised to recognise succesful POST, PATCH and PUT actions following a succesful 200 ok response from DummyJSON.    |
-| DummyJSON's cookie authentication system was not working at the time this project was created. As a result cookie-based authentication was not available. | Auth Tokens are stored in local storage and passed through headers. Known security errors are detailed below.     |
+| DummyJSON's cookie authentication system was not working at the time this project was created. As a result cookie-based authentication was not available. This was due to a CORS error disallowing cookies, similar to the issue described at https://github.com/Ovi/DummyJSON/issues/88. | Auth Tokens are stored in local storage and passed through headers. Known security errors are detailed below.     |
 | Register and password reset operations are not supported by dummyJSON. | Currently the register and forgot password pages are not functional. But developed to demonstrate UI/UX considerations and prepare for future implementation.   |
 
 
