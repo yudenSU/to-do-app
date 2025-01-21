@@ -1,6 +1,8 @@
 import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
-import { Box, IconButton, Typography } from "@mui/joy";
+import Box from "@mui/joy/Box";
+import IconButton from "@mui/joy/IconButton";
+import Typography from "@mui/joy/Typography";
 
 interface PaginationProps {
     current: number;

@@ -1,4 +1,3 @@
-import { Alert, Box, Button, Input, List, Typography } from "@mui/joy";
 import TodoListItem from "./TodoListItem";
 import { useCreateTodo, useDeleteTodo, useFetchUserTodos, useUpdateTodo } from "../../api/api";
 import { useEffect, useState } from "react";
@@ -6,7 +5,14 @@ import { INewToDo, ITodo, IUpdateToDoRequest } from "../../types/interfaces";
 import Pagination from "../Pagination";
 import { useAuth } from "../../auth/hooks/useAuth";
 import Add from "@mui/icons-material/Add";
-
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import Input from "@mui/joy/Input";
+import Alert from "@mui/joy/Alert";
+import List from "@mui/joy/List";
+import Typography from "@mui/joy/Typography";
+import LinearProgress from "@mui/joy/LinearProgress";
+import Warning from "@mui/icons-material/Warning";
 
 export default function Todo() {
     const limit = 10;
@@ -17,12 +23,12 @@ export default function Todo() {
     const { mutate: createTodo } = useCreateTodo();
     const { mutate: deleteTodo } = useDeleteTodo();
     const { mutate: updateTodo } = useUpdateTodo();
-
-
+    const [alertColor, setAlertColor] = useState<"success" | "danger">("success")
     const { user } = useAuth();
     const userId = Number(user?.id);
 
-    const showAlert = (message: string) => {
+    const showAlert = (message: string, color: "success" | "danger") => {
+        setAlertColor(color)
         setAlertMessage(message);
         setTimeout(() => {
             setAlertMessage(null);
@@ -34,7 +40,7 @@ export default function Todo() {
         data: fetchData,
         isLoading: isFetchLoading,
         isError: isFetchError,
-        refetch, // Get refetch function from useQuery
+        refetch,
     } = useFetchUserTodos(userId, limit, skip);
 
     // Convert entries to pages
@@ -75,44 +81,41 @@ export default function Todo() {
         setNewTodoContent(""); // Clear the input field
 
 
-        await createTodo(newTodo, {
+        createTodo(newTodo, {
             onSuccess: () => {
                 refetch();
-                showAlert("Task created successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.");
+                showAlert("Task created successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.", "success");
             },
-            onError: (error) => {
-                console.error("Error creating todo:", error);
+            onError: () => {
+                showAlert("Oops there was an error creating a new task.", "danger");
             },
         });
     };
 
     // Callback to handle delete and log the todo item
     const handleDeleteTodo = (id: number) => {
-        console.log("Deleting todo:", id);
         deleteTodo(id, {
             onSuccess: () => {
                 refetch();
-                showAlert("Task deleted successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.");
+                showAlert("Task deleted successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.", "success");
 
             },
-            onError: (error) => {
-                console.error("Error creating todo:", error);
-            },            
+            onError: () => {
+                showAlert("Oops there was an error deleting the task.", "danger");
+            },
         })
     };
 
     const handleUpdateTodo = (updateTodoItem: IUpdateToDoRequest) => {
-        console.log("updating todo:", updateTodoItem);
-        
         updateTodo(updateTodoItem, {
             onSuccess: () => {
                 refetch();
-                showAlert("Task updated successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.");
+                showAlert("Task updated successfully: Changes are not reflected, as DummyJSON does not allow Create, Update and Delete operations.", "success");
 
             },
             onError: () => {
-                console.error("Error creating todo");
-            },            
+                showAlert("Oops there was an error updating the task.", "danger");
+            },
         })
     };
 
@@ -167,7 +170,7 @@ export default function Todo() {
                         >
                             <Button
                                 sx={{
-                                    flex: 1, // Allow the button to take the full width of its container
+                                    flex: 1,
                                 }}
                                 variant="soft"
                                 size="lg"
@@ -191,38 +194,43 @@ export default function Todo() {
                         </Box>
                     </Box>
                 )}
-              {alertMessage && (
+                {alertMessage && (
                     <Alert
                         sx={{ my: 2 }}
                         variant="soft"
-                        color="success"
-                        >
+                        color={alertColor}
+                    >
                         {alertMessage}
                     </Alert>
                 )}
                 <List sx={{ marginBottom: 2 }}>
                     {isFetchLoading ? (
-                        <Typography>Loading...</Typography>
+                        <LinearProgress />
                     ) : isFetchError ? (
-                        <Typography>Error: Something went wrong!</Typography>
+
+                        <Alert 
+                        color="danger" 
+                        variant="soft" 
+                        startDecorator={<Warning/>}>
+                            Oops! Something went wrong.
+                        </Alert>
                     ) : fetchData?.todos?.length > 0 ? (
                         fetchData.todos.map((todo: ITodo) => (
-                            <TodoListItem 
-                            key={todo.id} 
-                            todo={todo} 
-                            onDelete={handleDeleteTodo} 
-                            onToggleCompletion={
-                                handleUpdateTodo
-                            } 
-                            onEditCompletion={
-                                handleUpdateTodo
-                            } 
+                            <TodoListItem
+                                key={todo.id}
+                                todo={todo}
+                                onDelete={handleDeleteTodo}
+                                onToggleCompletion={
+                                    handleUpdateTodo
+                                }
+                                onEditCompletion={
+                                    handleUpdateTodo
+                                }
                             />))
                     ) : (
                         <Typography>No todos available.</Typography>
                     )}
                 </List>
-
                 {fetchData && (
                     <Pagination
                         current={entriesToPageConversion(skip, limit) + 1}

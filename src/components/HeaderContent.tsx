@@ -57,7 +57,6 @@ function ColorSchemeToggle() {
 
 export default function Header() {
   const [open, setOpen] = React.useState(false);
-  
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -86,7 +85,7 @@ export default function Header() {
           <ModalClose />
           <DialogTitle>My to do list</DialogTitle>
           <Box sx={{ px: 1 }}>
-            <SideBar/>
+            <SideBar />
           </Box>
         </Drawer>
       </Box>
@@ -107,7 +106,7 @@ export default function Header() {
           >
             <Avatar
               alt='profile-picture'
-              src={ user?.image}
+              src={user?.image}
               sx={{ maxWidth: '32px', maxHeight: '32px' }}
             />
           </MenuButton>
@@ -124,7 +123,7 @@ export default function Header() {
             <MenuItem>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Avatar
-                  src={ user?.image}
+                  src={user?.image}
                   sx={{ borderRadius: '50%' }}
                 />
                 <Box sx={{ ml: 1.5 }}>
@@ -137,10 +136,10 @@ export default function Header() {
                 </Box>
               </Box>
             </MenuItem>
-            <ListDivider />            
+            <ListDivider />
             <MenuItem onClick={() => {
-              logout()
-              navigate('/login')
+                navigate('/login')
+                logout()
               }}>
               <LogoutRoundedIcon />
               Log out

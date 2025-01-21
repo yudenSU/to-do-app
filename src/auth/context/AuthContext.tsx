@@ -5,6 +5,7 @@ import { User } from "../../types/interfaces";
 
 interface AuthContextType {
     user: User | null;
+    refresh: () => Promise<boolean>;
     login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     getUser: () => Promise<User | null>

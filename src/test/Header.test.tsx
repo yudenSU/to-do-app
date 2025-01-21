@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Header from '../components/HeaderContent';
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AuthProvider } from '../auth/context/AuthProvider';
-import { vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CssVarsProvider } from '@mui/joy';
 // Mock the useAuth hook
 vi.mock('../auth/hooks/useAuth', () => ({

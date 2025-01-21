@@ -1,24 +1,32 @@
 import { useEffect, useState } from 'react';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
-import { Button, DialogTitle, FormControl, IconButton, Input, Modal, ModalDialog, Stack, Typography } from '@mui/joy';
 import { ITodo, IUpdateToDoRequest } from '../../types/interfaces';
 import CheckBox from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlank from '@mui/icons-material/CheckBoxOutlineBlank';
 import Close from '@mui/icons-material/Close';
+import Modal from '@mui/joy/Modal';
+import DialogTitle from '@mui/joy/DialogTitle/DialogTitle';
+import FormControl from '@mui/joy/FormControl';
+import Input from '@mui/joy/Input';
+import ModalDialog from '@mui/joy/ModalDialog';
+import Stack from '@mui/joy/Stack';
+import IconButton from '@mui/joy/IconButton';
+import Button from '@mui/joy/Button';
+import Typography from '@mui/joy/Typography';
 
 interface TodoListItemProps {
     todo: ITodo;
-    onToggleCompletion: (updateTodoRequest: IUpdateToDoRequest) => void; // Callback for toggling the completion status
-    onEditCompletion: (updateTodoRequest: IUpdateToDoRequest) => void; // Callback for editing the todo
-    onDelete: (id: number) => void; // Callback for deleting the todo
+    onToggleCompletion: (updateTodoRequest: IUpdateToDoRequest) => void;
+    onEditCompletion: (updateTodoRequest: IUpdateToDoRequest) => void;
+    onDelete: (id: number) => void; 
 }
 
 export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEditCompletion }: TodoListItemProps) {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
     const [open, setOpen] = useState(false);
-    const [newTask, setNewTask] = useState(todo.todo); 
+    const [newTask, setNewTask] = useState(todo.todo);
 
     useEffect(() => {
         const handleResize = () => {
@@ -54,19 +62,20 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
     return (
         <>
             <Modal open={open} onClose={() => setOpen(false)}>
-                <ModalDialog minWidth={isSmallScreen ? '90%': '500px'}>
+                <ModalDialog minWidth={isSmallScreen ? '90%' : '500px'}>
                     <DialogTitle>Edit task</DialogTitle>
                     <form onSubmit={handleEditSubmit}>
                         <Stack spacing={2}>
                             <FormControl>
-                            <Input
+                                <Input
                                     value={newTask}
                                     onChange={(e) => setNewTask(e.target.value)} // Update the local state with the new value
                                     placeholder='Enter task'
                                     name='task'
                                     autoFocus
                                     required
-                                />                            </FormControl>
+                                />                            
+                            </FormControl>
                             <Button type="submit">Submit</Button>
                         </Stack>
                     </form>
@@ -100,7 +109,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                 }
             >
                 <ListItemButton
-                    onClick={() => {setOpen(true)}}
+                    onClick={() => { setOpen(true) }}
                     sx={{
                         borderRadius: 5,
                         border: '1px solid',

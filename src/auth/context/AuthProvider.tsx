@@ -5,6 +5,30 @@ import { User } from '../../types/interfaces';
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
 
+    const refresh = async () => {
+        const refreshToken = localStorage.getItem("refreshToken")
+
+        const refreshResponse = await fetch('https://dummyjson.com/auth/refresh', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer asd`
+
+            },
+            body: JSON.stringify({
+                refreshToken: `${refreshToken}`,
+              }),
+        });
+
+        if (!refreshResponse.ok) {
+            return false
+        }
+        return true
+
+    }
+
+
     const login = async (username: string, password: string) => {
         
         let response = await fetch('https://dummyjson.com/auth/login', {
@@ -57,15 +81,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const logout = () => {
+        setUser(null);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        setUser(null);
     };
 
     const getUser = async () => {
 
         const accessToken = localStorage.getItem("accessToken")
-
+        if (!accessToken) {
+            return null
+        }
         let response = await fetch('https://dummyjson.com/auth/me', {
             method: 'GET',
             headers: {
@@ -130,7 +156,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, getUser }}>
+        <AuthContext.Provider value={{ user, refresh, login, logout, getUser }}>
             {children}
         </AuthContext.Provider>
     );

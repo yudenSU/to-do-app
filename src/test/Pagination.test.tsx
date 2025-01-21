@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import Pagination from '../components/Pagination';
 
 const onPrev = vi.fn();

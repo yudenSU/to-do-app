@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { test, vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CssVarsProvider } from '@mui/joy';
 import Todo from '../components/todo/Todo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

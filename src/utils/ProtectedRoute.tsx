@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../auth/hooks/useAuth';
+import Box from '@mui/joy/Box';
+import CircularProgress from '@mui/joy/CircularProgress';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -26,7 +28,18 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }, [getUser]);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Wait for authentication check
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh', // Full viewport height
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (isAuthenticated === false && isAuthenticated != null) {

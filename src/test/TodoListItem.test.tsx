@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from "react-router-dom";
-import { vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CssVarsProvider } from '@mui/joy';
 import TodoListItem from '../components/todo/TodoListItem';
 
@@ -61,7 +61,6 @@ test('successfully trigger callbacks', async () => {
 
     );
 
-    const content = screen.getByText(mockTodo.todo);
     const checkIcon = screen.getByTitle("check");
     const deleteIcon = screen.getByTitle("delete");
 
