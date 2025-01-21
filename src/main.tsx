@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { CssVarsProvider, CssBaseline } from '@mui/joy'
 import { theme } from './theme.ts'
-import '@fontsource/inter'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from "./auth/context/AuthProvider";
 
