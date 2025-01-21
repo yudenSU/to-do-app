@@ -41,7 +41,7 @@ test('renders LoginPage correctly', () => {
   expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
 
   // Check if the username input is rendered
-  expect(screen.getByLabelText(/username or email address/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText('Username or email')).toBeInTheDocument();
 
   // Check if the password input is rendered (use getByRole for better precision)
   const passwordInput = screen.getByPlaceholderText('password');

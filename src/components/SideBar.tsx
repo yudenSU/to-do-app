@@ -11,44 +11,46 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SideBar() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  return (
-    <List
-      size="sm"
-      sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px' }}
-    >
-      <ListItem nested>
+    return (
         <List
-          aria-labelledby="nav-list-browse"
-          sx={{ '& .JoyListItemButton-root': { p: '8px' } }}
+            size="sm"
+            sx={{ '--ListItem-radius': 'var(--joy-radius-sm)', '--List-gap': '4px' }}
         >
-          <ListItem>
-            <ListItemButton
-              onClick={
-                () => {
-                  navigate('/')
-                }}>
-              <ListItemDecorator>
-                <PeopleRoundedIcon fontSize="small" />
-              </ListItemDecorator>
-              <ListItemContent>To do</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              onClick={
-                () => {
-                  navigate('/help')
-                }}>
-              <ListItemDecorator sx={{ color: 'neutral.500' }}>
-                <HelpRoundedIcon fontSize="small" />
-              </ListItemDecorator>
-              <ListItemContent>Help</ListItemContent>
-            </ListItemButton>
-          </ListItem>
+            <ListItem nested>
+                <List
+                    aria-labelledby="nav-list-browse"
+                    sx={{ '& .JoyListItemButton-root': { p: '8px' } }}
+                >
+                    <ListItem>
+                        <ListItemButton
+                            aria-label="Go to to dos page"
+                            onClick={
+                                () => {
+                                    navigate('/')
+                                }}>
+                            <ListItemDecorator>
+                                <PeopleRoundedIcon fontSize="small" />
+                            </ListItemDecorator>
+                            <ListItemContent>To do</ListItemContent>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton
+                            aria-label="Go to help page"
+                            onClick={
+                                () => {
+                                    navigate('/help')
+                                }}>
+                            <ListItemDecorator sx={{ color: 'neutral.500' }}>
+                                <HelpRoundedIcon fontSize="small" />
+                            </ListItemDecorator>
+                            <ListItemContent>Help</ListItemContent>
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </ListItem>
         </List>
-      </ListItem>
-    </List>
-  );
+    );
 }

@@ -138,6 +138,7 @@ export default function Todo() {
                     variant="soft"
                     disabled={open}
                     onClick={() => setOpen(true)}
+                    aria-label="Add a new task"
                 >
                     Add task
                 </Button>
@@ -158,6 +159,7 @@ export default function Todo() {
                             fullWidth
                             required
                             size="md"
+                            aria-label="New task content"
                         />
                         <Box
                             sx={{
@@ -172,6 +174,7 @@ export default function Todo() {
                                 sx={{
                                     flex: 1,
                                 }}
+                                aria-label="Cancel adding task"
                                 variant="soft"
                                 size="lg"
                                 color="neutral"
@@ -188,6 +191,7 @@ export default function Todo() {
                                 type="submit"
                                 variant="soft"
                                 size="lg"
+                                aria-label="Submit new task"
                             >
                                 Add
                             </Button>
@@ -199,19 +203,25 @@ export default function Todo() {
                         sx={{ my: 2 }}
                         variant="soft"
                         color={alertColor}
+                        aria-live="assertive"
                     >
                         {alertMessage}
                     </Alert>
                 )}
                 <List sx={{ marginBottom: 2 }}>
                     {isFetchLoading ? (
-                        <LinearProgress />
+                        <LinearProgress
+                            aria-label="Loading tasks..."
+                        />
                     ) : isFetchError ? (
 
-                        <Alert 
-                        color="danger" 
-                        variant="soft" 
-                        startDecorator={<Warning/>}>
+                        <Alert
+                            color="danger"
+                            variant="soft"
+                            startDecorator={<Warning />}
+                            aria-label="Error loading tasks"
+                            aria-live="assertive"
+                        >
                             Oops! Something went wrong.
                         </Alert>
                     ) : fetchData?.todos?.length > 0 ? (
@@ -220,6 +230,7 @@ export default function Todo() {
                                 key={todo.id}
                                 todo={todo}
                                 onDelete={handleDeleteTodo}
+                                aria-label={`Todo item: ${todo.todo}`}
                                 onToggleCompletion={
                                     handleUpdateTodo
                                 }
@@ -237,6 +248,7 @@ export default function Todo() {
                         total={entriesToPageConversion(fetchData.total, limit)}
                         onPrev={handlePrev}
                         onNext={handleNext}
+                        aria-label="Pagination controls"
                     />
                 )}
             </Box>

@@ -8,34 +8,34 @@ import SideNav from './SideNav';
 import HeaderContent from '../HeaderContent';
 
 export default function StandardLayout({ children }: { children: React.ReactNode }) {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+	const [drawerOpen, setDrawerOpen] = React.useState(false);
 
 
-  return (
-    <>
-      {drawerOpen && (
-        <SideDrawer onClose={() => setDrawerOpen(false)}>
-          <SideBar />
-        </SideDrawer>
-      )}
-      <Root
-        sx={[
-          drawerOpen && {
-            height: '100vh',
-            overflow: 'hidden',
-          },
-        ]}
-      >
-        <Header>
-          <HeaderContent />
-        </Header>
-        <SideNav>
-          <SideBar />
-        </SideNav>
-        <Main>
-          {children}
-        </Main>
-      </Root>
-    </>
-  );
+	return (
+		<>
+			{drawerOpen && (
+				<SideDrawer onClose={() => setDrawerOpen(false)}>
+					<SideBar />
+				</SideDrawer>
+			)}
+			<Root
+				sx={[
+					drawerOpen && {
+						height: '100vh',
+						overflow: 'hidden',
+					},
+				]}
+			>
+				<Header>
+					<HeaderContent />
+				</Header>
+				<SideNav>
+					<SideBar />
+				</SideNav>
+				<Main>
+					{children}
+				</Main>
+			</Root>
+		</>
+	);
 }

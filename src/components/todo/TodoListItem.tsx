@@ -64,8 +64,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
             <Modal open={open} onClose={() => setOpen(false)}>
                 <ModalDialog minWidth={isSmallScreen ? '90%' : '500px'}>
                     <DialogTitle>Edit task</DialogTitle>
-                    <form onSubmit={handleEditSubmit}>
-                        <Stack spacing={2}>
+                    <form onSubmit={handleEditSubmit} aria-labelledby="edit-task-modal">                        <Stack spacing={2}>
                             <FormControl>
                                 <Input
                                     value={newTask}
@@ -74,6 +73,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                                     name='task'
                                     autoFocus
                                     required
+                                    aria-describedby="task-input-description"
                                 />                            
                             </FormControl>
                             <Button type="submit">Submit</Button>
@@ -88,7 +88,9 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                 key={todo.id} // Use todo.id as key, as it should be unique
                 startAction={
 
-                    <IconButton title={todo.completed ? "uncheck" : "check"}
+                    <IconButton 
+                        aria-label={todo.completed ? "Mark task as incomplete" : "Mark task as complete"}
+                        title={todo.completed ? "uncheck" : "check"}
                         sx={{
                             pr: 1
                         }}
@@ -101,7 +103,9 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                     </IconButton>
                 }
                 endAction={
-                    <IconButton title="delete"
+                    <IconButton 
+                        aria-label="Delete task"
+                        title="delete"
                         onClick={() => onDelete(todo.id)} // Trigger the delete callback when the close button is clicked
                     >
                         <Close />
@@ -109,6 +113,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                 }
             >
                 <ListItemButton
+                    aria-label="Edit task"
                     onClick={() => { setOpen(true) }}
                     sx={{
                         borderRadius: 5,

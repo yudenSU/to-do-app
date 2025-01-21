@@ -24,129 +24,136 @@ import { useAuth } from '../auth/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 function ColorSchemeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
+	const { mode, setMode } = useColorScheme();
+	const [mounted, setMounted] = React.useState(false);
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return <IconButton size="sm" variant="plain" color="neutral" />;
-  }
-  return (
-    <Tooltip title="Change theme" variant="outlined">
-      <IconButton
-        data-screenshot="toggle-mode"
-        size="sm"
-        variant="plain"
-        color="neutral"
-        sx={{ alignSelf: 'center' }}
-        onClick={() => {
-          if (mode === 'light') {
-            setMode('dark');
-          } else {
-            setMode('light');
-          }
-        }}
-      >
-        {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
-      </IconButton>
-    </Tooltip>
-  );
+	React.useEffect(() => {
+		setMounted(true);
+	}, []);
+	if (!mounted) {
+		return <IconButton size="sm" variant="plain" color="neutral" />;
+	}
+	return (
+		<Tooltip title="Change theme" variant="outlined">
+			<IconButton
+				aria-label='toggle light or dark theme'
+				data-screenshot="toggle-mode"
+				size="sm"
+				variant="plain"
+				color="neutral"
+				sx={{ alignSelf: 'center' }}
+				onClick={() => {
+					if (mode === 'light') {
+						setMode('dark');
+					} else {
+						setMode('light');
+					}
+				}}
+			>
+				{mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+			</IconButton>
+		</Tooltip>
+	);
 }
 
 export default function Header() {
-  const [open, setOpen] = React.useState(false);
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
+	const [open, setOpen] = React.useState(false);
+	const { user, logout } = useAuth()
+	const navigate = useNavigate()
 
-  return (
-    <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'space-between' }}>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: { xs: 'none', sm: 'flex' },
-        }}
-      >
-
-      </Stack>
-      <Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
-        <IconButton variant="plain" color="neutral" onClick={() => setOpen(true)}>
-          <MenuRoundedIcon />
-        </IconButton>
-        <Drawer
-          sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
-          open={open}
-          onClose={() => setOpen(false)}
-        >
-          <ModalClose />
-          <DialogTitle>My to do list</DialogTitle>
-          <Box sx={{ px: 1 }}>
-            <SideBar />
-          </Box>
-        </Drawer>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 1.5,
-          alignItems: 'center',
-        }}
-      >
-        <ColorSchemeToggle />
-        <Dropdown>
-          <MenuButton
-            variant="plain"
-            size="sm"
-            sx={{ maxWidth: '32px', maxHeight: '32px', borderRadius: '9999999px' }}
-          >
-            <Avatar
-              alt='profile-picture'
-              src={user?.image}
-              sx={{ maxWidth: '32px', maxHeight: '32px' }}
-            />
-          </MenuButton>
-          <Menu
-            placement="bottom-end"
-            size="sm"
-            sx={{
-              zIndex: '99999',
-              p: 1,
-              gap: 1,
-              '--ListItem-radius': 'var(--joy-radius-sm)',
-            }}
-          >
-            <MenuItem>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar
-                  src={user?.image}
-                  sx={{ borderRadius: '50%' }}
-                />
-                <Box sx={{ ml: 1.5 }}>
-                  <Typography level="title-sm" textColor="text.primary">
-                    {user?.username}
-                  </Typography>
-                  <Typography level="body-xs" textColor="text.tertiary">
-                    {user?.email}
-                  </Typography>
-                </Box>
-              </Box>
-            </MenuItem>
-            <ListDivider />
-            <MenuItem onClick={() => {
-                navigate('/login')
-                logout()
-              }}>
-              <LogoutRoundedIcon />
-              Log out
-            </MenuItem>
-          </Menu>
-        </Dropdown>
-      </Box>
-    </Box>
-  );
+	return (
+		<Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'space-between' }}>
+			<Stack
+				direction="row"
+				spacing={1}
+				sx={{
+					justifyContent: 'center',
+					alignItems: 'center',
+					display: { xs: 'none', sm: 'flex' },
+				}}
+			>
+			</Stack>
+			<Box sx={{ display: { xs: 'inline-flex', sm: 'none' } }}>
+				<IconButton
+					variant="plain"
+					color="neutral"
+					onClick={() => setOpen(true)}
+					aria-label="Open navigation menu"
+				>
+					<MenuRoundedIcon />
+				</IconButton>
+				<Drawer
+					sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
+					open={open}
+					onClose={() => setOpen(false)}
+				>
+					<ModalClose />
+					<DialogTitle>My to do list</DialogTitle>
+					<Box sx={{ px: 1 }}>
+						<SideBar />
+					</Box>
+				</Drawer>
+			</Box>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					gap: 1.5,
+					alignItems: 'center',
+				}}
+			>
+				<ColorSchemeToggle />
+				<Dropdown>
+					<MenuButton
+						variant="plain"
+						size="sm"
+						sx={{ maxWidth: '32px', maxHeight: '32px', borderRadius: '9999999px' }}
+					>
+						<Avatar
+							alt='profile-picture'
+							src={user?.image}
+							sx={{ maxWidth: '32px', maxHeight: '32px' }}
+						/>
+					</MenuButton>
+					<Menu
+						placement="bottom-end"
+						size="sm"
+						sx={{
+							zIndex: '99999',
+							p: 1,
+							gap: 1,
+							'--ListItem-radius': 'var(--joy-radius-sm)',
+						}}
+					>
+						<MenuItem>
+							<Box sx={{ display: 'flex', alignItems: 'center' }}>
+								<Avatar
+									src={user?.image}
+									sx={{ borderRadius: '50%' }}
+								/>
+								<Box sx={{ ml: 1.5 }}>
+									<Typography level="title-sm" textColor="text.primary">
+										{user?.username}
+									</Typography>
+									<Typography level="body-xs" textColor="text.tertiary">
+										{user?.email}
+									</Typography>
+								</Box>
+							</Box>
+						</MenuItem>
+						<ListDivider />
+						<MenuItem
+							aria-label='logout'
+							onClick={() => {
+								navigate('/login')
+								logout()
+							}}>
+							<LogoutRoundedIcon />
+							Log out
+						</MenuItem>
+					</Menu>
+				</Dropdown>
+			</Box>
+		</Box>
+	);
 }
