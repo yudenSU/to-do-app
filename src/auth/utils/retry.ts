@@ -1,5 +1,3 @@
-// utils/retry.ts
-
 export const retryRequest = async (
     requestFn: () => Promise<Response>,
     retries: number = 3,
@@ -26,7 +24,6 @@ export const retryRequest = async (
       }
     }
   
-    // If we reach this point, it means retries are exhausted and we need to throw an error
     throw new Error('Request failed after multiple attempts');
   };
   

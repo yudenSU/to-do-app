@@ -4,7 +4,7 @@ import { BrowserRouter, useNavigate } from "react-router-dom";
 import { AuthProvider } from '../auth/context/AuthProvider';
 import { expect, test, vi } from 'vitest';
 import { CssVarsProvider } from '@mui/joy';
-// Mock the useAuth hook
+
 vi.mock('../auth/hooks/useAuth', () => ({
     useAuth: () => ({
         user: { username: 'JohnDoe', email: 'john@example.com', image: '/path/to/image' },
@@ -21,7 +21,7 @@ vi.mock('react-router-dom', () => ({
     useParams: () => ({
         articleId: '63d466ca3d00b50db15aed93',
     }),
-    useNavigate: vi.fn(), // Mock the useNavigate hook
+    useNavigate: vi.fn(),
     BrowserRouter: vi.fn().mockImplementation((props) => props.children),
 }));
 
@@ -37,11 +37,6 @@ test('renders Header correctly', () => {
 
     );
 
-    // // Check if the color scheme toggle button is rendered
-    // const toggleButton = screen.getByTitle('Change theme');
-    // expect(toggleButton).toBeInTheDocument();
-
-    // Check if the avatar is rendered with user image
     const avatar = screen.getByRole('img');
     expect(avatar).toHaveAttribute('src', '/path/to/image');
     
@@ -67,15 +62,12 @@ test('successful logout navigates to login page', async () => {
 
     );
 
-    // Simulate user clicking the avatar and opening the menu
     const avatarButton = screen.getByAltText('profile-picture');
     fireEvent.click(avatarButton);
 
-    // Simulate user clicking the logout menu item
     const logoutButton = screen.getByText('Log out');
     fireEvent.click(logoutButton);
 
-    // Wait for the logout function to be called and check navigation
     await waitFor(() => {
         expect(navigate).toHaveBeenCalledWith('/login');
     });

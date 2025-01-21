@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter, useNavigate } from "react-router-dom";
-import { vi } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CssVarsProvider } from '@mui/joy';
 import SideBar from '../components/SideBar';
-// Mock the useAuth hook
+
 vi.mock('react-router-dom', () => ({
     useNavigate: vi.fn(),
   }));

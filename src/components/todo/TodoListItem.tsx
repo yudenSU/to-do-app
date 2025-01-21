@@ -22,6 +22,11 @@ interface TodoListItemProps {
     onDelete: (id: number) => void; 
 }
 
+/*
+All actions are passed as callback functions to the parent component
+this is to ensure that the todo parent component acts as the orchestrator
+for all CRUD client-server interaction events.
+*/
 export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEditCompletion }: TodoListItemProps) {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isMediumScreen, setIsMediumScreen] = useState(false);
@@ -85,7 +90,8 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                 sx={{
                     mt: 1
                 }}
-                key={todo.id} // Use todo.id as key, as it should be unique
+                 // Use todo.id as key, as it should be unique
+                key={todo.id}
                 startAction={
 
                     <IconButton 
@@ -106,7 +112,7 @@ export default function TodoListItem({ todo, onToggleCompletion, onDelete, onEdi
                     <IconButton 
                         aria-label="Delete task"
                         title="delete"
-                        onClick={() => onDelete(todo.id)} // Trigger the delete callback when the close button is clicked
+                        onClick={() => onDelete(todo.id)}
                     >
                         <Close />
                     </IconButton>

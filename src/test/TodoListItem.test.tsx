@@ -15,7 +15,6 @@ const mockTodo = {
     completed: false,
     userId: 1
 };
-// Mock the callback functions
 const onToggleCompletion = vi.fn();
 const onEditCompletion = vi.fn();
 const onDelete = vi.fn();

@@ -7,8 +7,8 @@ import Typography from "@mui/joy/Typography";
 interface PaginationProps {
 	current: number;
 	total: number;
-	onPrev: () => void; // Callback for previous button
-	onNext: () => void; // Callback for next button
+	onPrev: () => void;
+	onNext: () => void;
 }
 
 export default function Pagination({ current, total, onPrev, onNext }: PaginationProps) {

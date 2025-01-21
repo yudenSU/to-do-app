@@ -1,15 +1,16 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { INewToDo, IUpdateToDoRequest } from "../types/interfaces";
-import { useAuth } from "../auth/hooks/useAuth"; // Assuming this is your custom auth hook
+import { useAuth } from "../auth/hooks/useAuth";
 
 const standardRetryLogic = (failureCount: number, error: Error): boolean => {
 	if (failureCount < 3) {
 	  if (error instanceof Error) {
-		const statusCode = parseInt(error.message.split(" ")[3]); // Extract status code from error message
-		return statusCode !== 404 && statusCode !== 401; // Retry for non-404, non-401 errors
+		const statusCode = parseInt(error.message.split(" ")[3]);
+		return statusCode !== 404 && statusCode !== 401;
 	  }
 	}
-	return false; // Stop retrying after 3 attempts or for non-retryable errors
+   // Stop retrying after 3 attempts or for non-retryable errors
+	return false;
   };
 
 const apiRequest = async (

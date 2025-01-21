@@ -2,7 +2,7 @@ import Box, { BoxProps } from "@mui/joy/Box";
 import React from "react";
 
 interface HeaderProps extends BoxProps {
-	children?: React.ReactNode;  // Explicitly allow children
+	children?: React.ReactNode;
 }
 
 function Header({ children, ...props }: HeaderProps) {
@@ -30,7 +30,7 @@ function Header({ children, ...props }: HeaderProps) {
 				...(Array.isArray(props.sx) ? props.sx : [props.sx]),
 			]}
 		>
-			{children}  {/* Render children */}
+			{children}
 		</Box>
 	);
 }

@@ -4,7 +4,6 @@ import { BrowserRouter, useNavigate } from 'react-router-dom';
 import { AuthProvider } from '../auth/context/AuthProvider';
 import { expect, test, vi } from 'vitest';
 
-// Mock the useAuth hook
 vi.mock('../auth/hooks/useAuth', () => ({
   useAuth: () => ({
       user: { username: 'JohnDoe', email: 'john@example.com', image: '/path/to/image' },
@@ -22,8 +21,8 @@ vi.mock('react-router-dom', () => ({
   useParams: () => ({
       articleId: '63d466ca3d00b50db15aed93',
   }),
-  Link: vi.fn(), // Mock the useNavigate hook
-  useNavigate: vi.fn(), // Mock the useNavigate hook
+  Link: vi.fn(),
+  useNavigate: vi.fn(),
   BrowserRouter: vi.fn().mockImplementation((props) => props.children),
 }));
 
@@ -37,17 +36,13 @@ test('renders LoginPage correctly', () => {
     </BrowserRouter>
   );
 
-  // Check if the main heading is rendered
   expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
 
-  // Check if the username input is rendered
   expect(screen.getByPlaceholderText('Username or email')).toBeInTheDocument();
 
-  // Check if the password input is rendered (use getByRole for better precision)
   const passwordInput = screen.getByPlaceholderText('password');
   expect(passwordInput).toBeInTheDocument();
 
-  // Check if the sign-in button is rendered
   expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
 });
 
@@ -62,7 +57,6 @@ test('navigate on succefull sign in correctly', async () => {
     </BrowserRouter>
   );
 
-  // Check 
   const signInButton = screen.getByRole('button', { name: /sign in/i });
   fireEvent.click(signInButton)
 

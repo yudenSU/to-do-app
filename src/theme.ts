@@ -1,4 +1,4 @@
-import { extendTheme } from '@mui/joy';
+import { extendTheme } from "@mui/joy";
 
 // Extend the default theme and apply custom changes
 export const theme = extendTheme({
@@ -6,26 +6,26 @@ export const theme = extendTheme({
     light: {
       palette: {
         primary: {
-          solidBg: '#1976d2',  // Custom light blue
+          solidBg: "#1976d2",
         },
         background: {
-          body: '#ffffff',  // Custom light background
+          body: "#ffffff",
         },
         text: {
-          primary: '#333',  // Dark text on light background
+          primary: "#333",
         },
       },
     },
     dark: {
       palette: {
         primary: {
-          solidBg: '#90caf9',  // Custom lighter blue for dark mode
+          solidBg: "#90caf9",
         },
         background: {
-          body: '#121212',  // Custom dark background
+          body: "#121212",
         },
         text: {
-          primary: '#f22ff',  // Light text on dark background
+          primary: "#f22ff",
         },
       },
     },

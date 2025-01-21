@@ -5,7 +5,8 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        navigate('/dashboard'); // Redirect to dashboard after login
+        // Redirect to dashboard after login
+        navigate('/dashboard');
     };
 
     return (
@@ -49,7 +50,6 @@ const RegisterPage = () => {
                     <FormControl>
                         <FormLabel>Password</FormLabel>
                         <Input
-                            // html input attribute
                             name="password"
                             type="password"
                             placeholder="password"
@@ -58,7 +58,6 @@ const RegisterPage = () => {
                     <FormControl>
                         <FormLabel>Confirm Password</FormLabel>
                         <Input
-                            // html input attribute
                             name="confirm password"
                             type="confirm password"
                             placeholder="confirm password"

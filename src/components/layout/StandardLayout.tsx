@@ -9,8 +9,6 @@ import HeaderContent from '../HeaderContent';
 
 export default function StandardLayout({ children }: { children: React.ReactNode }) {
 	const [drawerOpen, setDrawerOpen] = React.useState(false);
-
-
 	return (
 		<>
 			{drawerOpen && (

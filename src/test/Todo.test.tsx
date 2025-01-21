@@ -12,7 +12,6 @@ vi.mock('react-router-dom', () => ({
 
 const queryClient = new QueryClient();
 
-// Mock useFetchUserTodos to return mock data
 vi.mock('../../api/api', () => ({
     useFetchUserTodos: vi.fn().mockReturnValue({
       data: {

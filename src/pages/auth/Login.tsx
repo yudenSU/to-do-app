@@ -38,7 +38,8 @@ const LoginPage = () => {
     };
 
     const handleInputChange = () => {
-        setErrorMessage(null); // Reset the error message when the user starts typing
+        // Reset the error message when the user starts typing
+        setErrorMessage(null); 
     };
 
     return (
@@ -79,7 +80,7 @@ const LoginPage = () => {
                             name="usernameOrEmail"
                             type="text"
                             placeholder="Username or email"
-                            onChange={handleInputChange} // Reset error message on typing
+                            onChange={handleInputChange}
                         />
                     </FormControl>
                     <FormControl>
@@ -106,7 +107,8 @@ const LoginPage = () => {
                         <Typography
                             color="danger"
                             sx={{ fontSize: 'sm', textAlign: 'center' }}
-                            aria-live="assertive" // Ensure the error message is announced to screen readers
+                             // Ensure the error message is announced to screen readers
+                            aria-live="assertive"
                         >
                             {errorMessage}
                         </Typography>

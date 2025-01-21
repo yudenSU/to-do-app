@@ -6,7 +6,7 @@ import RegisterPage from "./pages/auth/Register";
 import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import ForgotPasswordPage from "./pages/auth/ForgotPassword";
-import HelpPage from "./pages/help";
+import HelpPage from "./pages/HelpPage";
 
 function App() {
   const { setMode } = useColorScheme();
